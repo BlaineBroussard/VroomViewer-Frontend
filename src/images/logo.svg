@@ -1,0 +1,19 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <!-- Arrows (no arrowheads) around magnifying glass -->
+    <path d="M200 60 A140 140 0 0 1 340 200" fill="none" stroke="#ffffff" stroke-width="10"/>
+    <path d="M340 200 A140 140 0 0 1 200 340" fill="none" stroke="#ffffff" stroke-width="10"/>
+    <path d="M200 340 A140 140 0 0 1 60 200" fill="none" stroke="#ffffff" stroke-width="10"/>
+  
+    <!-- Magnifying glass -->
+    <circle cx="200" cy="200" r="70" stroke="#ffffff" stroke-width="12" fill="none"/>
+    <line x1="255" y1="255" x2="285" y2="285" stroke="#ffffff" stroke-width="12"/>
+  
+    <!-- Simple car inside glass -->
+    <rect x="170" y="185" width="60" height="30" rx="5" fill="#ffffff"/>
+    <circle cx="180" cy="220" r="5" fill="#ffffff"/>
+    <circle cx="220" cy="220" r="5" fill="#ffffff"/>
+  
+    <!-- Text slightly lower -->
+    <text x="200" y="385" font-family="Arial, sans-serif" font-weight="bold" font-size="32" fill="#ffffff" text-anchor="middle">VROOM VIEWER</text>
+  </svg>
+  
