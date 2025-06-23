@@ -11,6 +11,7 @@ export const loginStyles = {
     backgroundPosition: "center",
     backgroundSize: "cover",
     padding: theme.spacing(2),
+    color: "#FFFFFF",
     textAlign: "center",
   }),
   form: (theme: Theme) => ({

@@ -1,28 +1,37 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { loginStyles } from "./loginStyles";
 import logo from "../../images/logo.svg";
-import { useContext, useState } from "react";
+import { useEffect, useState } from "react";
 import StyledButton from "../../utility/StyledButton";
 import FormTemplate, { FormDefinition } from "../../utility/FormTemplate";
 import * as yup from "yup";
 import { useUserContext } from "../../App";
-import api, { getToken, ReturnRequest, showSnackbar } from "../../api/api";
+import api, { getToken, showSnackbar } from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const theme = useTheme();
   const [loading, setLoading] = useState<boolean>(false);
   const [signIn, setSignIn] = useState<Boolean>(true);
-  const { value, setValue } = useUserContext();
+  const navigate = useNavigate();
+
+  const { setValue } = useUserContext();
+
+  useEffect(() => {});
 
   const onClick = (): void => {
     setSignIn(!signIn);
+  };
+
+  const onForgot = (): void => {
+    navigate("/forgotPassword");
   };
 
   const onSubmitLogin = async (payload: any): Promise<void> => {
     setLoading(true);
     const returnResponse = await api("/login", "Post", getToken(), payload);
     setLoading(false);
-    console.log(returnResponse);
+
     if (returnResponse.success && returnResponse.token) {
       setValue((prev) => ({
         ...prev,
@@ -40,6 +49,7 @@ const LoginPage = () => {
         localStorage.removeItem("token");
         sessionStorage.setItem("token", returnResponse.token);
       }
+      navigate("/");
     }
 
     showSnackbar(returnResponse, setValue);
@@ -128,41 +138,44 @@ const LoginPage = () => {
   ];
 
   return (
-    <Box sx={loginStyles.loginContainer(theme)}>
-      <Box sx={loginStyles.loginBox(theme)}>
-        <Box>
-          <Box component="img" src={logo} sx={loginStyles.imageLogo()} />
-          <Typography sx={{ fontSize: 32, fontWeight: 600 }}>
-            {signIn ? "Sign In" : "Sign Up"}
-          </Typography>
+    <Box sx={loginStyles.loginBox(theme)}>
+      <Box>
+        <Box component="img" src={logo} sx={loginStyles.imageLogo()} />
+        <Typography color="text.primary" sx={{ fontSize: 32, fontWeight: 600 }}>
+          {signIn ? "Sign In" : "Sign Up"}
+        </Typography>
+      </Box>
+      <Box>
+        {signIn ? (
+          <FormTemplate
+            key={"login-form"}
+            loading={loading}
+            size={12}
+            submit={onSubmitLogin}
+            formDef={loginForm}
+          />
+        ) : (
+          <FormTemplate
+            key={"signup-form"}
+            loading={loading}
+            size={12}
+            submit={onSubmitSignUp}
+            formDef={signUpForm}
+          />
+        )}
+      </Box>
+      <Box>
+        <Box sx={loginStyles.buttonContainer}>
+          <StyledButton
+            text={signIn ? "Register" : "Back to Login"}
+            onclick={onClick}
+          />
         </Box>
-        <Box>
-          {signIn ? (
-            <FormTemplate
-              key={"login-form"}
-              loading={loading}
-              size={12}
-              submit={onSubmitLogin}
-              formDef={loginForm}
-            />
-          ) : (
-            <FormTemplate
-              key={"signup-form"}
-              loading={loading}
-              size={12}
-              submit={onSubmitSignUp}
-              formDef={signUpForm}
-            />
-          )}
-        </Box>
-        <Box>
+        {signIn && (
           <Box sx={loginStyles.buttonContainer}>
-            <StyledButton
-              text={signIn ? "Register" : "Back to Login"}
-              onclick={onClick}
-            />
+            <StyledButton text={"Forgot Password?"} onclick={onForgot} />
           </Box>
-        </Box>
+        )}
       </Box>
     </Box>
   );

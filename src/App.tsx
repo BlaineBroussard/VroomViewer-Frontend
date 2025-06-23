@@ -2,12 +2,16 @@ import "./App.css";
 import LoginPage from "./login/components/LoginPage";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./styles/theme";
-import { Alert, Box, Snackbar, SnackbarCloseReason } from "@mui/material";
-import { styles } from "./AppStyles";
-import { createContext, useContext, useEffect, useState } from "react";
-import getLocalValues from "./utility/getLocalValues";
+import { Alert, Snackbar, SnackbarCloseReason } from "@mui/material";
+import { createContext, useContext, useState } from "react";
 import React from "react";
 import HomePage from "./homePage/HomePage";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./utility/ProtectedRoute";
+import ForgotPassword from "./login/components/ForgotPassword";
+import LoginBackground from "./login/components/LoginBackground";
+import ResetPage from "./login/components/ResetPage";
+
 export interface snackbar {
   type: "error" | "warning" | "success" | "info";
   active: boolean;
@@ -47,18 +51,6 @@ function App() {
     },
   });
 
-  useEffect(() => {
-    const fetchToken = async () => {
-      const token = await getLocalValues();
-      // Handle both string and { token: undefined } case
-      setValue((prev) => ({
-        ...prev,
-        token: typeof token === "string" ? token : undefined,
-      }));
-    };
-    fetchToken();
-  }, [value.snackbar.message]);
-
   const handleClose = (
     event: React.SyntheticEvent | Event,
     reason?: SnackbarCloseReason
@@ -77,15 +69,21 @@ function App() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <UserContext.Provider value={{ value, setValue }}>
-        {value.token ? (
-          <HomePage />
-        ) : (
-          <Box sx={styles.overallTheme(theme)}>
-            <LoginPage />
-          </Box>
-        )}
+    <UserContext.Provider value={{ value, setValue }}>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<LoginBackground />}>
+              <Route path="/forgotPassword" element={<ForgotPassword />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="reset" element={<ResetPage />} />
+            </Route>
+
+            <Route element={<ProtectedRoute />}>
+              <Route path="/" element={<HomePage />}></Route>
+            </Route>
+          </Routes>
+        </BrowserRouter>
 
         <Snackbar
           open={value.snackbar.active}
@@ -101,8 +99,8 @@ function App() {
             {value.snackbar.message}
           </Alert>
         </Snackbar>
-      </UserContext.Provider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </UserContext.Provider>
   );
 }
 
