@@ -1,5 +1,5 @@
 import { Theme } from "@mui/material";
-import roadImage from "../../images/road.jpg";
+import roadImage from "../images/road.jpg";
 export const loginStyles = {
   loginContainer: (theme: Theme) => ({
     display: "flex",
@@ -19,7 +19,6 @@ export const loginStyles = {
     width: "75%",
     margin: "0 auto",
     mt: 4,
-    mb: 4,
     border: "none",
   }),
   buttonContainer: () => ({

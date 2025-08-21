@@ -8,9 +8,10 @@ import {
   Grid,
 } from "@mui/material";
 import { useState } from "react";
-import { loginStyles } from "../login/components/loginStyles";
+import { loginStyles } from "../login/loginStyles";
 import { styles } from "../styles/globalStyles";
 import CircularProgress from "@mui/material/CircularProgress";
+import ReCAPTCHA from "react-google-recaptcha";
 
 interface dropdownValues {
   id: string;
@@ -31,10 +32,12 @@ interface Props {
   formDef: FormDefinition[];
   size: number;
   loading: boolean;
+  captcha?: boolean;
 }
 
-const FormTemplate = ({ submit, formDef, size, loading }: Props) => {
+const FormTemplate = ({ submit, formDef, size, loading, captcha }: Props) => {
   const theme = useTheme();
+  const [captchaValue, setCaptcha] = useState<string>();
   const initialFormValues = formDef.reduce((acc, element) => {
     switch (element.type) {
       case "TextField":
@@ -88,6 +91,10 @@ const FormTemplate = ({ submit, formDef, size, loading }: Props) => {
     return false;
   };
 
+  function onChange(value: any) {
+    setCaptcha(value);
+  }
+
   return (
     <Box sx={loginStyles.form(theme)}>
       <form onSubmit={() => onSubmit} noValidate>
@@ -122,6 +129,12 @@ const FormTemplate = ({ submit, formDef, size, loading }: Props) => {
             )}
           </Grid>
         </Grid>
+        {captcha && (
+          <ReCAPTCHA
+            onChange={onChange}
+            sitekey={process.env.REACT_APP_captchaSiteKey || ""}
+          />
+        )}
 
         <Box sx={loginStyles.formSubmit}>
           {loading === true ? (
@@ -129,7 +142,9 @@ const FormTemplate = ({ submit, formDef, size, loading }: Props) => {
           ) : (
             <Button
               sx={styles.button(theme)}
-              disabled={findErrors()}
+              disabled={
+                findErrors() || (captcha ? captchaValue === undefined : false)
+              }
               variant="contained"
               onClick={() => onSubmit(formValues)}
             >

@@ -1,12 +1,12 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { loginStyles } from "./loginStyles";
-import logo from "../../images/logo.svg";
+import logo from "../images/logo.svg";
 import { useEffect, useState } from "react";
-import StyledButton from "../../utility/StyledButton";
-import FormTemplate, { FormDefinition } from "../../utility/FormTemplate";
+import StyledButton from "../utility/StyledButton";
+import FormTemplate, { FormDefinition } from "../utility/FormTemplate";
 import * as yup from "yup";
-import { useUserContext } from "../../App";
-import api, { getToken, showSnackbar } from "../../api/api";
+import { useUserContext } from "../App";
+import api, { getToken, showSnackbar } from "../api/api";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
@@ -49,7 +49,7 @@ const LoginPage = () => {
         localStorage.removeItem("token");
         sessionStorage.setItem("token", returnResponse.token);
       }
-      navigate("/");
+      navigate("/home");
     }
 
     showSnackbar(returnResponse, setValue);
@@ -153,6 +153,7 @@ const LoginPage = () => {
             size={12}
             submit={onSubmitLogin}
             formDef={loginForm}
+            captcha
           />
         ) : (
           <FormTemplate

@@ -1,7 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useUserContext } from "../App";
-
 import React from "react";
+import HeaderBar from "./Headerbar";
+import { Box } from "@mui/material";
 
 export default function ProtectedRoute() {
   const { setValue } = useUserContext();
@@ -18,5 +19,16 @@ export default function ProtectedRoute() {
   if (!token) {
     return <Navigate to="/login" replace />;
   }
-  return <Outlet />;
+  return (
+    <Box
+      sx={{
+        display: "grid",
+        gridTemplateRows: "5rem 1fr",
+        height: "100vh",
+      }}
+    >
+      <HeaderBar />
+      <Outlet />
+    </Box>
+  );
 }

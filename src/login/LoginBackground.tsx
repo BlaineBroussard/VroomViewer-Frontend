@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import theme from "../../styles/theme";
+import theme from "../styles/theme";
 import { loginStyles } from "./loginStyles";
 import { Outlet } from "react-router-dom";
 

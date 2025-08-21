@@ -1,12 +1,12 @@
 import { Box, Typography, useTheme } from "@mui/material";
-import FormTemplate, { FormDefinition } from "../../utility/FormTemplate";
+import FormTemplate, { FormDefinition } from "../utility/FormTemplate";
 import { loginStyles } from "./loginStyles";
-import logo from "../../images/logo.svg";
+import logo from "../images/logo.svg";
 import * as yup from "yup";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useUserContext } from "../../App";
-import api, { getToken, showSnackbar } from "../../api/api";
+import { useUserContext } from "../App";
+import api, { getToken, showSnackbar } from "../api/api";
 
 const ResetPage = () => {
   const theme = useTheme();
@@ -16,7 +16,6 @@ const ResetPage = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const resetToken = queryParams.get("resetToken");
-  console.log(resetToken);
   const onSubmit = async (payload: any) => {
     setLoading(true);
     const returnResponse = await api(

@@ -1,5 +1,5 @@
 import "./App.css";
-import LoginPage from "./login/components/LoginPage";
+import LoginPage from "./login/LoginPage";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./styles/theme";
 import { Alert, Snackbar, SnackbarCloseReason } from "@mui/material";
@@ -8,9 +8,11 @@ import React from "react";
 import HomePage from "./homePage/HomePage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./utility/ProtectedRoute";
-import ForgotPassword from "./login/components/ForgotPassword";
-import LoginBackground from "./login/components/LoginBackground";
-import ResetPage from "./login/components/ResetPage";
+import ForgotPassword from "./login/ForgotPassword";
+import LoginBackground from "./login/LoginBackground";
+import ResetPage from "./login/ResetPage";
+import HomeRedirect from "./utility/HomeRedirect";
+import CustomerPage from "./customers/customer";
 
 export interface snackbar {
   type: "error" | "warning" | "success" | "info";
@@ -80,7 +82,11 @@ function App() {
             </Route>
 
             <Route element={<ProtectedRoute />}>
-              <Route path="/" element={<HomePage />}></Route>
+              <Route path="/" element={<HomeRedirect />}></Route>
+              <Route path="/home" element={<HomePage />}></Route>
+              <Route path="/customers" element={<CustomerPage />}></Route>
+              <Route path="/admin" element={<HomePage />}></Route>
+              <Route path="/profile" element={<HomePage />}></Route>
             </Route>
           </Routes>
         </BrowserRouter>
