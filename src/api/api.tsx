@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { storedValues, useUserContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 export interface ReturnRequest {
   success: boolean;
@@ -90,6 +91,11 @@ const api = async (
 
       resolve(res.data);
     } catch (error: any) {
+      if (error.response.data.error === "Invalid token") {
+        localStorage.removeItem("token");
+        sessionStorage.removeItem("token");
+        window.location.href = "/login";
+      }
       resolve({
         success: false,
         typeCode: error?.response?.status || 500,

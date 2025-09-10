@@ -20,15 +20,9 @@ export default function ProtectedRoute() {
     return <Navigate to="/login" replace />;
   }
   return (
-    <Box
-      sx={{
-        display: "grid",
-        gridTemplateRows: "5rem 1fr",
-        height: "100vh",
-      }}
-    >
+    <>
       <HeaderBar />
       <Outlet />
-    </Box>
+    </>
   );
 }
