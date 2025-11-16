@@ -21,6 +21,15 @@ export const loginStyles = {
     mt: 4,
     border: "none",
   }),
+  lightForm: (theme: Theme) => ({
+    width: "75%",
+    margin: "0 auto",
+    mt: 4,
+    padding: "5%",
+    color: "black !important",
+    border: "3px solid black",
+    borderRadius: "15px",
+  }),
   buttonContainer: () => ({
     width: "75%",
     margin: "0 auto",

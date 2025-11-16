@@ -20,9 +20,10 @@ interface dropdownValues {
 
 export interface FormDefinition {
   label: string;
-  type: "TextField" | "Dropdown" | "Checkbox" | "ExpandedTextField";
+  type: "TextField" | "Dropdown" | "Checkbox" | "ExpandedTextField" | "Phone";
   field: string;
   validationSchema: any;
+  placeholder?: string;
   dropdownValues?: dropdownValues[];
   errorText: string | null;
 }
@@ -33,14 +34,32 @@ interface Props {
   size: number;
   loading: boolean;
   captcha?: boolean;
+  lightForm?: boolean;
 }
 
-const FormTemplate = ({ submit, formDef, size, loading, captcha }: Props) => {
+const formatPhoneNumber = (num: string) => {
+  const cleaned = ("" + num).replace(/\D/g, "");
+  const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+  if (match) {
+    return `(${match[1]}) ${match[2]}-${match[3]}`;
+  }
+  return num;
+};
+
+const FormTemplate = ({
+  submit,
+  formDef,
+  size,
+  loading,
+  captcha,
+  lightForm,
+}: Props) => {
   const theme = useTheme();
   const [captchaValue, setCaptcha] = useState<string>();
   const initialFormValues = formDef.reduce((acc, element) => {
     switch (element.type) {
       case "TextField":
+      case "Phone":
       case "ExpandedTextField":
         acc[element.field] = { value: "", error: false };
         break;
@@ -96,22 +115,33 @@ const FormTemplate = ({ submit, formDef, size, loading, captcha }: Props) => {
   }
 
   return (
-    <Box sx={loginStyles.form(theme)}>
+    <Box
+      sx={lightForm ? loginStyles.lightForm(theme) : loginStyles.form(theme)}
+    >
       <form onSubmit={() => onSubmit} noValidate>
         <Grid container spacing={2}>
           <Grid size={size}>
             {formDef.map((item) =>
-              item.type === "TextField" ? (
+              item.type === "TextField" || item.type === "Phone" ? (
                 <TextField
-                  label={item.label}
+                  label={
+                    item.type === "Phone"
+                      ? formatPhoneNumber(item.placeholder || "")
+                      : item.placeholder || `Enter ${item.label}`
+                  }
                   variant="outlined"
                   fullWidth
-                  error={formValues[item.field]?.error! || false}
+                  error={formValues[item.field]?.error || false}
                   value={formValues[item.field]?.value}
                   helperText={
-                    formValues[item.field].error ? item.errorText : " "
+                    formValues[item.field]?.error ? item.errorText : " "
                   }
                   onChange={(e) => setValue(e.target.value, item.field)}
+                  sx={{
+                    "& .MuiInputBase-input": {
+                      color: lightForm ? "black" : "inherit", // or "" if you want default
+                    },
+                  }}
                 />
               ) : item.type === "Checkbox" ? (
                 <FormControlLabel

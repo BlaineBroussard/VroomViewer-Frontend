@@ -60,8 +60,6 @@ const HeaderBar = () => {
       >
         <Tab sx={styles.tab} label="All Test Drives" value="home" />
         <Tab sx={styles.tab} label="Customers" value="customers" />
-        <Tab sx={styles.tab} label="Admin" value="admin" />
-        <Tab sx={styles.tab} label="My Profile" value="profile" />
       </Tabs>
       <Box sx={styles.profile}>
         <Button

@@ -89,4 +89,11 @@ export const styles = {
   mainContent: () => ({
     p: 2,
   }),
+  addButton: (theme: Theme) => ({ backgroundColor: theme.palette.primary }),
+  customerEditForm: () => ({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+  }),
 };

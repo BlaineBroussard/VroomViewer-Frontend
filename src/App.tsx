@@ -85,8 +85,6 @@ function App() {
               <Route path="/" element={<HomeRedirect />}></Route>
               <Route path="/home" element={<HomePage />}></Route>
               <Route path="/customers" element={<CustomerPage />}></Route>
-              <Route path="/admin" element={<HomePage />}></Route>
-              <Route path="/profile" element={<HomePage />}></Route>
             </Route>
           </Routes>
         </BrowserRouter>
