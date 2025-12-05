@@ -1,5 +1,5 @@
 import { Box, Typography, useTheme } from "@mui/material";
-import FormTemplate, { FormDefinition } from "../utility/FormTemplate";
+import FormTemplate from "../utility/FormTemplate";
 import { loginStyles } from "./loginStyles";
 import logo from "../images/logo.svg";
 import * as yup from "yup";
@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useUserContext } from "../App";
 import api, { getToken, showSnackbar } from "../api/api";
+import { FormDefinition } from "../utility/types";
 
 const ResetPage = () => {
   const theme = useTheme();

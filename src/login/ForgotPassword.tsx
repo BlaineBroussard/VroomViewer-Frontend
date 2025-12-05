@@ -1,5 +1,5 @@
 import { Box, Typography, useTheme } from "@mui/material";
-import FormTemplate, { FormDefinition } from "../utility/FormTemplate";
+import FormTemplate from "../utility/FormTemplate";
 import StyledButton from "../utility/StyledButton";
 import { loginStyles } from "./loginStyles";
 import logo from "../images/logo.svg";
@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useUserContext } from "../App";
 import api, { getToken, showSnackbar } from "../api/api";
+import { FormDefinition } from "../utility/types";
 
 const ForgotPassword = () => {
   const theme = useTheme();

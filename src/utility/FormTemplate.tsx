@@ -12,21 +12,7 @@ import { loginStyles } from "../login/loginStyles";
 import { styles } from "../styles/globalStyles";
 import CircularProgress from "@mui/material/CircularProgress";
 import ReCAPTCHA from "react-google-recaptcha";
-
-interface dropdownValues {
-  id: string;
-  value: string;
-}
-
-export interface FormDefinition {
-  label: string;
-  type: "TextField" | "Dropdown" | "Checkbox" | "ExpandedTextField" | "Phone";
-  field: string;
-  validationSchema: any;
-  placeholder?: string;
-  dropdownValues?: dropdownValues[];
-  errorText: string | null;
-}
+import { FormDefinition } from "./types";
 
 interface Props {
   submit: (payload: any) => void;

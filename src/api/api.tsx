@@ -1,14 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { storedValues, useUserContext } from "../App";
-import { useNavigate } from "react-router-dom";
-
-export interface ReturnRequest {
-  success: boolean;
-  typeCode: number;
-  body?: any;
-  token?: string;
-  error?: any;
-}
+import { storedValues } from "../App";
+import { ReturnRequest } from "../utility/types";
 
 export const showSnackbar = (
   response: ReturnRequest,
