@@ -32,7 +32,7 @@ function ScrollContainer<T>({
   const [loadingMore, setLoadingMore] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const getAllCustomer = async () => {
+  const getAllItems = async () => {
     setLoading(true);
 
     const returnResponse = await api(
@@ -105,7 +105,7 @@ function ScrollContainer<T>({
   }, [loadOffset]);
 
   useEffect(() => {
-    getAllCustomer();
+    getAllItems();
   }, [refreshKey]);
 
   useEffect(() => {
@@ -130,7 +130,7 @@ function ScrollContainer<T>({
             },
           }}
           id="outlined-search"
-          label="Search Customers"
+          label="Search"
           type="search"
           onChange={(e) => search(e.target.value)}
         />
